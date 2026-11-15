@@ -1,0 +1,31 @@
+# Flutter
+build/
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+*.lock
+!pubspec.lock
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# macOS
+.DS_Store
+
+# Generated
+.dart_tool/
+*.g.dart
+*.freezed.dart
+lib/l10n/app_localizations*.dart
+
+# Firebase (keep google-services.json placeholder but ignore real)
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+
+# Testing
+coverage/

@@ -1,0 +1,48 @@
+name: Build BYBHUB APK
+
+on:
+  push:
+    branches: [ master, main ]
+  workflow_dispatch:  # Manual trigger button in GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.3'
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate localizations
+        run: flutter gen-l10n
+
+      - name: Build Debug APK
+        run: |
+          flutter build apk --debug \
+            --dart-define=API_URL=https://bybimport.com
+        
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: bybhub-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 30
+
+      - name: Build Release APK
+        run: |
+          flutter build apk --release \
+            --dart-define=API_URL=https://bybimport.com
+
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: bybhub-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
